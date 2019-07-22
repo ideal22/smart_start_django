@@ -16,7 +16,7 @@ class Startups(models.Model):
 	title = models.CharField(max_length=255)
 	description = models.TextField()
 	user = models.ForeignKey(Users, on_delete=models.CASCADE)
-	startupStatus = models.ForeignKey(StartupStatuses, on_delete=models.CASCADE)
+	startupStatus = models.ForeignKey('StartupStatuses', on_delete=models.CASCADE)
 
 class StartupStatuses(models.Model):
 	status = models.CharField(max_length=255)

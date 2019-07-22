@@ -1,9 +1,6 @@
 from django.urls import path
-
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from api.views import StartupsAPIView
 
 urlpatterns = [
-	path('api/token',TokenObtainPairView.as_view()),
-	path('api/token/refresh', TokenRefreshView.as_view()),
+	path('api/startups',StartupsAPIView.as_view(), name='api-startups'),
 ]
