@@ -18,9 +18,17 @@ class Startups(models.Model):
 	user = models.ForeignKey(Users, on_delete=models.CASCADE)
 	startupStatus = models.ForeignKey('StartupStatuses', on_delete=models.CASCADE)
 
+	def __str__(self):
+		return self.title
+
 class StartupStatuses(models.Model):
 	status = models.CharField(max_length=255)
+
+	def __str__(self):
+		return self.status
 
 class StartupFiles(models.Model):
 	fileType = models.CharField(max_length=255)
 	
+	def __str__(self):
+		return self.fileType
