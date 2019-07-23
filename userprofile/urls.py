@@ -5,5 +5,4 @@ urlpatterns = [
      path('register/', RegisterUser.as_view(), name='register'),
      path('full/', AccountCreateAPIView.as_view(), name='account'),
      path('login/', UserLogin.as_view(), name='login')
-
 ]
