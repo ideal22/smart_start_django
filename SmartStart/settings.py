@@ -89,8 +89,12 @@ WSGI_APPLICATION = 'SmartStart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'byup3ddfeckf8bzyrefd-postgresql.services.clever-cloud.com',
+        'NAME': 'byup3ddfeckf8bzyrefd',
+        'USER': 'u8phsnsa897dvgtxnd9t',
+        'PASSWORD': 'IITIXsP9jX8l6x1MB9jL',
+        'PORT': '5432',
     }
 }
 
