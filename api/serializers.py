@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from startups.models import Notifications, Comments, Startups, StartupFiles, StartupStatuses, StartupReply
+from userprofile.models import Expert
 
 class GetUser(serializers.ModelSerializer):
 	class Meta:
@@ -46,7 +47,7 @@ class StartupFilesSerializer(serializers.ModelSerializer):
 class StartupCommentSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Comments
-		fields = ('user', 'text' , 'date','startup')
+		fields = ('id', 'user', 'text' , 'date','startup')
 
 	def create(self, validated_data):
 		s = Comments.objects.create(**validated_data)
@@ -59,7 +60,7 @@ class StartupCommentSerializer(serializers.ModelSerializer):
 class StartupReplySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = StartupReply
-		fields = ('user','text' , 'date','reply')
+		fields = ('id', 'user','text' , 'date','reply')
 
 	def create(self, validated_data):
 		s = StartupReply.objects.create(**validated_data)
@@ -68,3 +69,7 @@ class StartupReplySerializer(serializers.ModelSerializer):
 		print(self.context['request'].user)
 		return s
 	
+class ExpertSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Expert
+		fields = ('id', 'full_name', 'username', 'age', 'occupation')

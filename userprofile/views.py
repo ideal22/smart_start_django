@@ -23,6 +23,7 @@ from rest_framework.generics import (
     DestroyAPIView,
     CreateAPIView,
 )
+from userprofile.models import Expert
 
 
 @permission_classes((AllowAny,))
@@ -61,6 +62,42 @@ class UserLogin(APIView):
         return Response({'token': token.key,
                          'user_id':user.id,
                          'username':user.username,
+                         'status': user.is_superuser})
+
+@permission_classes((AllowAny,))
+class RegisterExpert(APIView):
+    def post(self, request):
+        data = request.data
+        username = data['username']
+        password = data['password']
+        full_name = data['full_name']
+        user = User.objects.create(username=username, password=password)
+        expert_check = Expert.objects.filter(username=username)
+        if not expert_check:
+            new_expert = Expert.objects.create(username=username, password=password)
+            token, _ = Token.objects.get_or_create(user=expert)
+            new_expert.full_name = full_name
+            new_expert.save()
+            return Response("Expert is created")
+        else:
+            return Response("We have already the same username")
+
+
+@permission_classes((AllowAny,))
+class ExpertLogin(APIView):
+    def post(self, request):
+        data = request.data
+        username = data['username']
+        password = data['password']
+        if username is None or password is None:
+            return Response({'error': 'Please provide both username and password'})
+        expert = authenticate(username=username, password=password)
+        if not expert:
+            return Response({'error': 'Invalid Credentials'})
+        token, _ = Token.objects.get_or_create(user=expert)
+        return Response({'token': token.key,
+                         'expert_id':expert.id,
+                         'username':expert.username,
                          'status': user.is_superuser})
 
 

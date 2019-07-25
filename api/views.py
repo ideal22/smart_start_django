@@ -3,14 +3,24 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics, mixins
-from api.serializers import StartupsListSerializer,StartupsCreateSerializer, StartupStatusesSerializer, StartupFilesSerializer, StartupCommentSerializer, StartupReplySerializer, GetUser
+from api.serializers import StartupsListSerializer,StartupsCreateSerializer, StartupStatusesSerializer, ExpertSerializer, StartupFilesSerializer, StartupCommentSerializer, StartupReplySerializer, GetUser
 from startups.models import Startups, StartupStatuses, StartupFiles, Comments, StartupReply
+from userprofile.models import Expert
 
 class StartupsListAPIView(generics.ListAPIView):
     serializer_class = StartupsListSerializer
 
     def get_queryset(self):
         return Startups.objects.all()
+
+class StartupsWithIdAPIView(generics.ListAPIView):
+    serializer_class = StartupsListSerializer
+
+    def get_queryset(self):
+
+        id = self.kwargs['id']
+        return Startups.objects.filter(id=id)
+
 
 
 class StartupsCreateAPIView(generics.CreateAPIView):
@@ -46,11 +56,20 @@ class StartupCommentAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication,)
 
-
 class StartupCommentList(generics.ListAPIView):   
     serializer_class =  StartupCommentSerializer
     model = Comments
     queryset = Comments.objects.all()
+
+
+class StartupCommentWithIdList(generics.ListAPIView):   
+    serializer_class =  StartupCommentSerializer
+    model = Comments
+
+    def get_queryset(self):
+        id = self.kwargs['id']
+        return Comments.objects.filter(id=id)
+
 
 
 class StartupReplyAPIView(generics.CreateAPIView):
@@ -60,13 +79,27 @@ class StartupReplyAPIView(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
 
 
+
 class StartupReplyList(generics.ListAPIView):
     serializer_class = StartupReplySerializer 
     model = StartupReply
     queryset = StartupReply.objects.all()
+
+class StartupReplyWithIdList(generics.ListAPIView):
+    serializer_class = StartupReplySerializer 
+    model = StartupReply
+
+    def get_queryset(self):
+        id = self.kwargs['id']
+        return StartupReply.objects.filter(id=id)
 
 
 class UserList(generics.ListAPIView):
     serializer_class = GetUser
     model = User
     queryset = User.objects.all()
+
+class ExpertList(generics.ListAPIView):
+    serializer_class = ExpertSerializer
+    model = Expert
+    queryset = Expert.objects.all()
