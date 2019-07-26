@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics, mixins
-from api.serializers import StartupsListSerializer,StartupsCreateSerializer, StartupStatusesSerializer, ExpertSerializer, StartupFilesSerializer, StartupCommentSerializer, StartupReplySerializer, GetUser
+from api.serializers import StartupsListSerializer,StartupsCreateSerializer, StartupStatusesSerializer, StartupFilesSerializer, StartupCommentSerializer, StartupReplySerializer, GetUser
 from startups.models import Startups, StartupStatuses, StartupFiles, Comments, StartupReply
-from userprofile.models import Expert
+# from userprofile.models import Expert
 
 class StartupsListAPIView(generics.ListAPIView):
     serializer_class = StartupsListSerializer
@@ -75,8 +75,6 @@ class StartupCommentWithIdList(generics.ListAPIView):
 class StartupReplyAPIView(generics.CreateAPIView):
     queryset = StartupReply.objects.all()  
     serializer_class = StartupReplySerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
 
 
 
@@ -99,7 +97,7 @@ class UserList(generics.ListAPIView):
     model = User
     queryset = User.objects.all()
 
-class ExpertList(generics.ListAPIView):
-    serializer_class = ExpertSerializer
-    model = Expert
-    queryset = Expert.objects.all()
+# class ExpertList(generics.ListAPIView):
+#     serializer_class = ExpertSerializer
+#     model = Expert
+#     queryset = Expert.objects.all()

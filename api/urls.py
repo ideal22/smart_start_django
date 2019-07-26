@@ -1,5 +1,5 @@
 from django.urls import path
-from api.views import UserList,ExpertList,StartupReplyWithIdList,  StartupCommentWithIdList, StartupsListAPIView,StartupsCreateAPIView, StartupCommentAPIView , StartupCommentList, StartupReplyAPIView , StartupReplyList, StartupsWithIdAPIView
+from api.views import UserList,StartupReplyWithIdList,  StartupCommentWithIdList, StartupsListAPIView,StartupsCreateAPIView, StartupCommentAPIView , StartupCommentList, StartupReplyAPIView , StartupReplyList, StartupsWithIdAPIView
 
 urlpatterns = [
 	path('startups/list',StartupsListAPIView.as_view(), name='api-startups'),
@@ -12,5 +12,5 @@ urlpatterns = [
 	path('reply/list', StartupReplyList.as_view(), name='api-reply-list'),
 	path('reply/<int:id>/', StartupReplyWithIdList.as_view(), name='api-reply-with-id'),
 	path('users/list/', UserList.as_view(), name='api-users'),
-	path('experts/list/', ExpertList.as_view(), name='api-experts-list'),
+	#path('experts/list/', ExpertList.as_view(), name='api-experts-list'),
 ]

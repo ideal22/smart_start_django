@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Expert
+from .models import UserProfile
 
 admin.site.register(UserProfile)
-admin.site.register(Expert)
+# admin.site.register(Expert)

@@ -9,16 +9,19 @@ class Notifications(models.Model):
 
 class Comments(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	startup = models.ForeignKey('Startups', on_delete=models.CASCADE)
+	startup = models.ForeignKey('Startups', on_delete=models.CASCADE, related_name='comments', blank=True)
 	text = models.TextField(blank=True, default='', null=True)
 	date = models.DateTimeField(auto_now=True)
 
+	# replies = models.ForeignKey('StartupReply', on_delete=models.CASCADE, related_name='replies')
+
 class Startups(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	title = models.CharField(max_length=255)
 	description = models.TextField()
 	how_long = models.IntegerField()
 	file = models.FileField(null=True, blank=True, upload_to="media")
+	# comments = models.ForeignKey('Comments', on_delete=models.CASCADE, related_name='comments')
 
 	def __str__(self):
 		return self.title
@@ -37,6 +40,6 @@ class StartupFiles(models.Model):
 
 class StartupReply(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	reply = models.ForeignKey('Comments', on_delete=models.CASCADE)
+	replies = models.ForeignKey('Comments', on_delete=models.CASCADE, related_name='replies')
 	text = models.TextField(blank=True,default='', null=True)
 	date = models.DateTimeField(auto_now=True)
