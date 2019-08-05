@@ -23,7 +23,7 @@ from rest_framework.generics import (
     DestroyAPIView,
     CreateAPIView,
 )
-from userprofile.models import Expert
+# from userprofile.models import Expert
 
 
 @permission_classes((AllowAny,))

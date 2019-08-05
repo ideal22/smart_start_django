@@ -37,6 +37,6 @@ class StartupFiles(models.Model):
 
 class StartupReply(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	reply = models.ForeignKey('Comments', on_delete=models.CASCADE)
+	reply = models.ForeignKey('Comments', on_delete=models.CASCADE, related_name='reply')
 	text = models.TextField(blank=True,default='', null=True)
 	date = models.DateTimeField(auto_now=True)

@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics, mixins
-from api.serializers import StartupsListSerializer,StartupsCreateSerializer, StartupStatusesSerializer, ExpertSerializer, StartupFilesSerializer, StartupCommentSerializer, StartupReplySerializer, GetUser
+from api.serializers import GetSuperUserSerializer, StartupsListSerializer,StartupsCreateSerializer, StartupStatusesSerializer, StartupFilesSerializer, StartupCommentSerializer, StartupReplySerializer, GetUser
 from startups.models import Startups, StartupStatuses, StartupFiles, Comments, StartupReply
-from userprofile.models import Expert
+# from userprofile.models import Expert
 
 class StartupsListAPIView(generics.ListAPIView):
     serializer_class = StartupsListSerializer
@@ -17,7 +17,6 @@ class StartupsWithIdAPIView(generics.ListAPIView):
     serializer_class = StartupsListSerializer
 
     def get_queryset(self):
-
         id = self.kwargs['id']
         return Startups.objects.filter(id=id)
 
@@ -26,8 +25,6 @@ class StartupsWithIdAPIView(generics.ListAPIView):
 class StartupsCreateAPIView(generics.CreateAPIView):
     serializer_class = StartupsCreateSerializer
     queryset = Startups.objects.all()
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
 
 
 class StartupStatusesAPIView(mixins.CreateModelMixin, generics.ListAPIView):
@@ -75,8 +72,6 @@ class StartupCommentWithIdList(generics.ListAPIView):
 class StartupReplyAPIView(generics.CreateAPIView):
     queryset = StartupReply.objects.all()  
     serializer_class = StartupReplySerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
 
 
 
@@ -99,7 +94,14 @@ class UserList(generics.ListAPIView):
     model = User
     queryset = User.objects.all()
 
-class ExpertList(generics.ListAPIView):
-    serializer_class = ExpertSerializer
-    model = Expert
-    queryset = Expert.objects.all()
+class GetSuperUser(generics.ListAPIView):
+    serializer_class = GetSuperUserSerializer
+    model = User
+    queryset = User.objects.filter(is_superuser=True)
+
+
+
+# class ExpertList(generics.ListAPIView):
+#     serializer_class = ExpertSerializer
+#     model = Expert
+#     queryset = Expert.objects.all()
